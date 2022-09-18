@@ -40,4 +40,12 @@ class Venue:
             for category in category_records]
 
         return categories
- 
+
+    def to_json(self, cursor):
+        venue = self.__dict__
+        categories = self.categories(cursor)
+        venue['categories'] = [
+            category.name for category in categories]
+
+        return venue
+

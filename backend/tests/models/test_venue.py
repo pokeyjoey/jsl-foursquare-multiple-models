@@ -66,3 +66,12 @@ def test_venue_categories(db_conn):
     categories = grimaldis.categories(cursor)
     category_names = [category.name for category in categories]
     assert category_names == ['Pizza', 'Tourist Spot']
+
+def test_tojson(db_conn):
+    foursquare_id = "4bf58dd8d48988d151941735"
+    venue = Venue.find_by_foursquare_id(foursquare_id, db_conn)
+    cursor = db_conn.cursor()
+    venue_json = venue.to_json(cursor)
+    assert 'Pizza' in venue_json['categories']
+
+
