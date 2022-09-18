@@ -29,4 +29,17 @@ class Category:
             category = save(new_category, conn, cursor)
         return category
 
-    
+    def venues(self, cursor):
+        query = f"""
+            SELECT v.* FROM categories c
+            JOIN venue_categories vc
+            ON c.id = vc.category_id
+            JOIN venues v
+            ON v.id = vc.venue_id
+            WHERE c.id = {self.id}"""
+        cursor.execute(query)
+        venue_records = cursor.fetchall()
+        venues = [build_from_record(models.Venue, venue)
+                  for venue in venue_records]
+        return venues
+

@@ -67,9 +67,3 @@ def test_creates_venue_categories_to_associate_the_venue_to_the_categories(conn)
     categories = venue.categories(cursor)
     assert set([category.name 
     for category in categories]) == set(['Quick Bites', 'Taco Places'])
-    
-
-
-
-
-

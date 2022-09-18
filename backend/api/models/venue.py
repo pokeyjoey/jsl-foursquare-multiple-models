@@ -24,4 +24,20 @@ class Venue:
         else:
             return build_from_record(Venue, record)
 
-    
+    def categories(self, cursor):
+        query = f"""
+            SELECT c.* FROM venues v
+            JOIN venue_categories vc
+            ON v.id = vc.venue_id
+            JOIN categories c
+            ON c.id = vc.category_id
+            WHERE v.id = {self.id}
+        """
+        cursor.execute(query)
+        category_records = cursor.fetchall()
+        categories = [
+            build_from_record(models.Category, category)
+            for category in category_records]
+
+        return categories
+ 
